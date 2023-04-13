@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
     email: {type: String, required: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
-    studentId: {type: Number, required: true},
     class: {type: [mongoose.Collection.class]},
 });
 
