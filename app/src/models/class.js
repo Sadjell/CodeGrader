@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
 
-const userSchema = new mongoose.Schema({
+const classSchema = new mongoose.Schema({
     name: {type: String, required: true},
     beginningDate: {type: Date, required: true},
     endingDate: {type: Date, required: true},
@@ -10,6 +9,4 @@ const userSchema = new mongoose.Schema({
     assignments: {type:[mongoose.Collection.assignment], required: true}
 });
 
-userSchema.plugin(passportLocalMongoose, {usernameField: "email"});
-
-module.exports = mongoose.model("Class", userSchema);
+module.exports = mongoose.model("Class", classSchema);
