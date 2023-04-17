@@ -16,8 +16,9 @@ router.post("/:assignmentId/submissions", (req, res) => {
         const submissions = Assignment.findById(assignmentId).submission;
         const submission = submissions.push({
             studentId: req.body.studentId,
+            testCaseOutput: req.body.testCaseOutput,
             grade: req.body.grade,
-            feedback: req.body.feedback
+            feedback: ""
         });
 
         res.status(200).send(submission);
@@ -49,7 +50,7 @@ router.get("/:assignmentId/submissions/:studentId", (req, res) => {
         const assignment = Assignment.findById(assignmentId);
         //const student = Student.findById(studentId);
         const submissions = assignment.submission;
-        specSubmission = submissions.filter(submission => submission.studentId == studentId);
+        const specSubmission = submissions.filter(submission => submission.studentId == studentId);
 
         res.status(200).send(specSubmission);
 
@@ -93,8 +94,20 @@ router.put("/:assignmentId/submissions/:studentId/feedback", (req, res) => {
 });
 
 //get test case output for assignment
-router.put("/:assignmentId/testcase/:submissionId/:output", (req, res) => {
-    
+router.get("/:assignmentId/submissions/:studentId/testCaseOutput", (req, res) => {
+    const assignmentId = req.params.assignmentId;
+    const studentId = req.params.studentId;
+    try {
+        const assignment = Assignment.findById(assignmentId);
+        //const student = Student.findById(studentId);
+        const submissions = assignment.submission;
+        const specSubmission = submissions.filter(submission => submission.studentId == studentId);
+
+        res.status(200).send(specSubmission.testCaseOutput);
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
 //get due date

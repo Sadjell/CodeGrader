@@ -7,6 +7,7 @@ const assignmentSchema = new mongoose.Schema({
     testCase: {type: File, required: true},
     submission:[{
         studentId: {type: mongoose.Schema.Types.studentId},
+        testCaseOutput: {type: String, required: true},
         grade: {type: Number, required: true},
         feedback: {type: String, required: false}
     }]

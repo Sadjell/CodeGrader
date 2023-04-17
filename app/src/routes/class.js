@@ -116,17 +116,56 @@ router.put("/:courseId/assignments/:assignmentId", (req, res) => {
     }
 });
 
-//view all course grades
+//get all course grades
 router.get("/:courseId/grades", (req, res) => {
-    
+      var studentAverages = [];
+      var studentGrades = [];
+      const courseId = req.params.courseId;
+      try {
+          const course = Class.findById(courseId);
+          const assignments = course.assignments;
+          const students = course.students;
+          students.foreach((student,index) => {
+            assignments.forEach((assignment, index) => {
+                const submissions = assignment.submission;
+                const specSubmission = submissions.filter(submission => submission.studentId == student._id);
+                studentGrades.push(specSubmission.grade);
+              });
+              avgGrade = studentGrades.reduce((sum, next) => sum + next) / studentGrades.length;
+              studentAverages.push(avgGrade);
+          });
+
+          res.status(200).send(studentAverages);
+  
+      } catch (err) {
+          res.status(500).json(err);
+      }
 });
 
-//view a students course grade
+//get a students course grade
 router.get("/:courseId/grades/:studentId", (req, res) => {
-    
+    var studentGrades = [];
+    const courseId = req.params.courseId;
+    const studentId = req.params.studentId;
+    try {
+        const course = Class.findById(courseId);
+        const assignments = course.assignments;
+        assignments.forEach((assignment, index) => {
+          const submissions = assignment.submission;
+          const specSubmission = submissions.filter(submission => submission.studentId == studentId);
+          studentGrades.push(specSubmission.grade);
+        });
+        avgGrade = studentGrades.reduce((sum, next) => sum + next) / studentGrades.length;
+
+        res.status(200).send(avgGrade);
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-//update a students course grade
+/* //update a students course grade
 router.put("/:courseId/grades/:studentId", (req, res) => {
-    
-});
+    //for each assignment
+     //get specsub, then grade
+}); */
