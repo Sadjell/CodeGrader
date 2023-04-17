@@ -15,7 +15,7 @@ var assignmentRouter = require('./routes/assignment');
 
 var mongoose = require('mongoose');
 
-var mongooseUrl = 'mongodb+srv://ijcrawford:isaacpassword@codegrader-341.da0gq37.mongodb.net/test';
+var mongooseUrl = 'mongodb+srv://ijcrawford:isaacpassword@codegrader-341.da0gq37.mongodb.net/test?retryWrites=true&w=majority';
 
 mongoose.connect(mongooseUrl,{ useNewUrlParser: true });
 
