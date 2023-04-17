@@ -76,10 +76,32 @@ professorRouter.route("/:professorID")
 professorRouter.route("/courses")
 .get( async (req, res) => {
     console.log("Getting all courses...");
+    const courses = professor.course;
+    
+    try {    
+
+        res.status(200).json(courses);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 })
 
 //Get specific course
 professorRouter.route("/courses/:courseID")
 .get( async (req, res) => {
     console.log("Getting course with ID: " + req.params.courseID)
+    const courses = professor.course;
+    const courseId = req.params.courseID;
+    
+    try {    
+
+        const course = courses.findbyId(courseId);
+        res.status(200).json(course);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 })
