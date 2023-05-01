@@ -27,6 +27,10 @@ db.once('open',function(){
 
 var app = express();
 
+app.use(bodyParser.json({limit: '50mb', extended: true}));
+
+app.use(bodyParser.urlencoded({limit: '50mb', extended:true, parameterLimit: 10000}));
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
